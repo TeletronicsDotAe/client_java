@@ -117,7 +117,7 @@ public class MetricsFilterTest {
 
         final Double sum = CollectorRegistry.defaultRegistry.getSampleValue("foobar_baz_filter_duration_seconds_sum", new String[]{"path", "method"}, new String[]{path, HttpMethod.POST.asString()});
         assertNotNull(sum);
-        assertEquals(0.1, sum, 0.001);
+        assertEquals(0.1, sum, 0.01);
     }
 
     @Test
@@ -147,8 +147,8 @@ public class MetricsFilterTest {
 
         f.doFilter(req, res, c);
 
-        assertEquals(0.1, sum, 0.001);
         final Double sum = CollectorRegistry.defaultRegistry.getSampleValue("foo_sum", new String[]{"path", "method"}, new String[]{"/foo", HttpMethod.POST.asString()});
+        assertEquals(0.1, sum, 0.01);
 
         final Double le05 = CollectorRegistry.defaultRegistry.getSampleValue("foo_bucket", new String[]{"path", "method", "le"}, new String[]{"/foo", HttpMethod.POST.asString(), "0.05"});
         assertNotNull(le05);
